@@ -2,8 +2,6 @@ package config
 
 import (
 	"time"
-
-	"github.com/spf13/viper"
 )
 
 // Provider defines a set of read-only methods for accessing the application
@@ -25,5 +23,4 @@ type Provider interface {
 	GetTime(key string) time.Time
 	InConfig(key string) bool
 	IsSet(key string) bool
-	UnmarshalKey(key string, rawVal interface{}, opts ...viper.DecoderConfigOption) error
 }
