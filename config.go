@@ -3,7 +3,6 @@ package config
 import (
 	"strings"
 
-	"github.com/flamefatex/config/impl"
 	"github.com/flamefatex/log"
 	"github.com/spf13/viper"
 )
@@ -16,7 +15,7 @@ func Init(serviceName string) {
 	log.L().Infof("Config All Settings From File: %v", defaultConfig.AllSettings())
 }
 
-func Config() impl.Provider {
+func Config() Provider {
 	return defaultConfig
 }
 
@@ -24,7 +23,7 @@ func SetTestConfig(v *viper.Viper) {
 	defaultConfig = v
 }
 
-func LoadConfigProvider(appName string) impl.Provider {
+func LoadConfigProvider(appName string) Provider {
 	return readViperConfig(appName)
 }
 
