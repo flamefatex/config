@@ -7,7 +7,6 @@ import (
 // Provider defines a set of read-only methods for accessing the application
 // configuration params as defined in one of the config files.
 type Provider interface {
-	ConfigFileUsed() string
 	Get(key string) interface{}
 	GetBool(key string) bool
 	GetDuration(key string) time.Duration
@@ -23,4 +22,6 @@ type Provider interface {
 	GetTime(key string) time.Time
 	InConfig(key string) bool
 	IsSet(key string) bool
+	AllSettings() map[string]interface{}
+	ConfigFileUsed() string
 }

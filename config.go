@@ -1,9 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"strings"
 
-	"github.com/flamefatex/log"
 	"github.com/spf13/viper"
 )
 
@@ -12,7 +12,7 @@ var defaultConfig *viper.Viper
 //	从config.yml初始化配置
 func Init(serviceName string) {
 	defaultConfig = readViperConfig(serviceName)
-	log.L().Infof("Config All Settings From File: %v", defaultConfig.AllSettings())
+	//log.L().Infof("Config All Settings From File: %v", defaultConfig.AllSettings())
 }
 
 func Config() Provider {
@@ -38,8 +38,8 @@ func readViperConfig(serviceName string) *viper.Viper {
 	v.AddConfigPath(".")                         // optionally look for config in the working directory
 	err := v.ReadInConfig()                      // Find and read the config file
 	if err != nil {                              // Handle errors reading the config file
-		log.L().Fatalf("ReadInConfig err: %s", err)
-		return v
+		err = fmt.Errorf("ReadInConfig err: %w", err)
+		panic(err)
 	}
 
 	// global defaults
