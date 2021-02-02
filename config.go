@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/flamefatex/log"
 	"github.com/spf13/viper"
 )
 
@@ -12,7 +13,9 @@ var defaultConfig *viper.Viper
 //	从config.yml初始化配置
 func Init(serviceName string) {
 	defaultConfig = readViperConfig(serviceName)
-	//log.L().Infof("Config All Settings From File: %v", defaultConfig.AllSettings())
+	if Config().GetBool("config.enable_log") {
+		log.Infof("Config All Settings From File: %v", defaultConfig.AllSettings())
+	}
 }
 
 func Config() Provider {
