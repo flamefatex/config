@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var defaultConfig *viper.Viper
+var defaultConfig *viper.Viper = viper.New()
 
 //	从config.yml初始化配置
 func Init(serviceName string) {
@@ -26,15 +26,17 @@ func SetTestConfig(v *viper.Viper) {
 	defaultConfig = v
 }
 
-func LoadConfigProvider(appName string) Provider {
-	return readViperConfig(appName)
-}
-
 func readViperConfig(serviceName string) *viper.Viper {
 	v := viper.New()
-	v.SetEnvPrefix(strings.ToUpper(serviceName))
-	v.AutomaticEnv()
 
+	// env
+	envServiceName := strings.ToUpper(strings.ReplaceAll(serviceName, "-", "_"))
+	v.SetEnvPrefix(envServiceName)
+	v.AutomaticEnv()
+	replacer := strings.NewReplacer(".", "_")
+	viper.SetEnvKeyReplacer(replacer)
+
+	// config file
 	v.SetConfigName("config")                    // name of config file (without extension)
 	v.AddConfigPath("/etc/" + serviceName + "/") // path to look for the config file in
 	v.AddConfigPath("$HOME/." + serviceName)     // call multiple times to add many search paths
