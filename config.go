@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var defaultConfig *viper.Viper = viper.New()
+var defaultConfig *viper.Viper
 
 //	从config.yml初始化配置
 func Init(serviceName string) {
@@ -34,7 +34,7 @@ func readViperConfig(serviceName string) *viper.Viper {
 	v.SetEnvPrefix(envServiceName)
 	v.AutomaticEnv()
 	replacer := strings.NewReplacer(".", "_")
-	viper.SetEnvKeyReplacer(replacer)
+	v.SetEnvKeyReplacer(replacer)
 
 	// config file
 	v.SetConfigName("config")                    // name of config file (without extension)
